@@ -4,10 +4,10 @@ namespace MessengerService.Models
 {
     public class MessengerContext : DbContext
     {
-        DbSet<User> Users { get; set; }
-        DbSet<Role> Roles { get; set; }
-        DbSet<Message> Messages { get; set; }
-        DbSet<Chat> Chats { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<Message> Messages { get; set; }
+        public DbSet<Chat> Chats { get; set; }
 
         public MessengerContext(DbContextOptions<MessengerContext> options) : base(options)
         {
