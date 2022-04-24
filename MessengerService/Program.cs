@@ -1,10 +1,19 @@
 using MessengerService;
+using MessengerService.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+// получаем строку подключения из файла конфигурации
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+// добавляем контекст MessengerContext в качестве сервиса в приложение
+builder.Services.AddDbContext<MessengerContext>(options =>
+    options.UseSqlServer(connectionString));
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         .AddJwtBearer(options =>
         {
