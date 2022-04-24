@@ -13,5 +13,21 @@ namespace MessengerService.Models
         {
             Database.EnsureCreated();
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            string adminRoleName = "admin";
+            string userRoleName = "user";
+
+            // добавляем роли и пользователей
+            Role adminRole = new Role { Id = 1, Name = adminRoleName };
+            Role userRole = new Role { Id = 2, Name = userRoleName };
+            User adminUser = new User { Id = 1, Email = "admin@mail.com", Name = "admin", Password = "123456", RoleId = adminRole.Id };
+            User simpleUser = new User { Id = 2, Email = "roma@mail.com", Name = "Roma", Password = "123456", RoleId = userRole.Id };
+
+            modelBuilder.Entity<Role>().HasData(new Role[] { adminRole, userRole });
+            modelBuilder.Entity<User>().HasData(new User[] { adminUser, simpleUser });
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }
