@@ -17,12 +17,12 @@ namespace MessengerService.Controllers
         }
 
         [HttpPost("/token")]
-        public ObjectResult Token(string username, string password)
+        public ObjectResult Token(string email, string password)
         {
-            var identity = GetIdentity(username, password);
+            var identity = GetIdentity(email, password);
             if (identity == null)
             {
-                return BadRequest("Invalid username or password");
+                return BadRequest("Invalid email or password");
             }
 
             var now = DateTime.UtcNow;
@@ -46,14 +46,14 @@ namespace MessengerService.Controllers
             return Ok(response);
         }
 
-        private ClaimsIdentity GetIdentity(string username, string password)
+        private ClaimsIdentity GetIdentity(string email, string password)
         {
-            User user = db.Users.FirstOrDefault(x => x.Name == username && x.Password == password);
+            User user = db.Users.FirstOrDefault(x => x.Email == email&& x.Password == password);
             if (user != null)
             {
                 var claims = new List<Claim>
                 {
-                    new Claim(ClaimsIdentity.DefaultNameClaimType, user.Name),
+                    new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
                     new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role.Name)
                 };
                 ClaimsIdentity claimsIdentity =
