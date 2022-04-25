@@ -48,7 +48,7 @@ namespace MessengerService.Controllers
 
         private ClaimsIdentity GetIdentity(string username, string password)
         {
-            User user = db.Users.FirstOrDefault(x => x.Name == username);
+            User user = db.Users.FirstOrDefault(x => x.Name == username && x.Password == password);
             if (user != null)
             {
                 var claims = new List<Claim>
